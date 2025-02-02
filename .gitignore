@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/GeneralWork MVC/v17
+/.vs/VSWorkspaceState.json
+/GeneralWorkMVC/.vs/GeneralWorkMVC
+/GeneralWorkMVC/bin
+/GeneralWorkMVC/obj/Debug
+/GeneralWorkMVC/packages
