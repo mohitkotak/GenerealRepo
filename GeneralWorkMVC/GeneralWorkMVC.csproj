@@ -164,6 +164,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ExcelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TempController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -227,6 +228,8 @@
     <Content Include="Views\Excel\Index.cshtml" />
     <Content Include="Views\Excel\UploadExcel.cshtml" />
     <Content Include="Views\Excel\ShowExcelData.cshtml" />
+    <Content Include="Views\Temp\Upload.cshtml" />
+    <Content Include="Views\Temp\DisplayExcelData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
