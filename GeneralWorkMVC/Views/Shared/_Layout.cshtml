@@ -6,6 +6,15 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @{
+        var currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+        var languages = new List<SelectListItem>
+         {
+         new SelectListItem { Text = "English", Value = "en" },
+         new SelectListItem { Text = "Français", Value = "fr" },
+         new SelectListItem { Text = "Español", Value = "es" }
+     };
+    }
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -21,7 +30,13 @@
                     <li>@Html.ActionLink("Excel", "Index", "Excel", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+                </ul>               
+                <select id="languageSwitcher" onchange="changeLanguage()">
+                    @foreach (var language in languages)
+                    {
+                        <option value="@language.Value" @(currentCulture.StartsWith(language.Value) ? "selected" : "")>@language.Text</option>
+                    }
+                </select>
             </div>
         </div>
     </nav>
@@ -30,11 +45,18 @@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>Current Culture: @System.Threading.Thread.CurrentThread.CurrentCulture.Name</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+        function changeLanguage() {
+            var culture = document.getElementById('languageSwitcher').value;
+            window.location.href = '/Home/ChangeLanguage?lang=' + culture;
+        }
+    </script>
 </body>
 </html>

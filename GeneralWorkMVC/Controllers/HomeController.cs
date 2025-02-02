@@ -26,5 +26,21 @@ namespace GeneralWorkMVC.Controllers
 
             return View();
         }
+
+        public ActionResult ChangeLanguage(string lang)
+        {
+            // Validate if the language is valid
+            if (!string.IsNullOrEmpty(lang))
+            {
+                // Set language in session
+                Session["Culture"] = lang;
+
+                // Set the current culture for this thread
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang);
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
