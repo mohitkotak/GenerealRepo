@@ -1,0 +1,41 @@
+﻿@model GeneralWorkMVC.ViewModel.ExcelViewModel
+@{
+    ViewBag.Title = "ShowExcelData";
+}
+
+<h2>Excel Data from Sheet1 (Users)</h2>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>@user.Name</td>
+            <td>@user.Age</td>
+            <td>@user.Email</td>
+        </tr>
+    }
+</table>
+
+<h2>Excel Data from Sheet2 (Products)</h2>
+
+<table border="1">
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    @foreach (var product in Model.Products)
+    {
+        <tr>
+            <td>@product.ProductName</td>
+            <td>@product.Price</td>
+            <td>@product.Quantity</td>
+        </tr>
+    }
+</table>
+

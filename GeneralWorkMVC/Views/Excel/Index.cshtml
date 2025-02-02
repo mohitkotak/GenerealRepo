@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Excel Operations</h2>
+
+@* In the Index view or wherever you want the button *@
+<a href="@Url.Action("DownloadExcel", "Excel")" class="btn btn-primary">Download Excel</a>
+<a href="@Url.Action("DownloadColorExcel", "Excel")" class="btn btn-primary">Download Color Excel</a>
+<a href="@Url.Action("UploadExcel", "Excel")" class="btn btn-primary">Upload Excel</a>
+
+
