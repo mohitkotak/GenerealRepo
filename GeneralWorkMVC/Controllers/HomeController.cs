@@ -29,16 +29,18 @@ namespace GeneralWorkMVC.Controllers
 
         public ActionResult ChangeLanguage(string lang)
         {
-            // Validate if the language is valid
-            if (!string.IsNullOrEmpty(lang))
+            // Validate the language to prevent invalid inputs
+            if (string.IsNullOrEmpty(lang) || !(lang == "en" || lang == "fr" || lang == "es"))
             {
-                // Set language in session
-                Session["Culture"] = lang;
-
-                // Set the current culture for this thread
-                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang);
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
+                lang = "en"; // Default to English if no valid language is selected
             }
+
+            // Set the language cookie with a 30-day expiration
+            var languageCookie = new HttpCookie("Language", lang)
+            {
+                Expires = DateTime.Now.AddMonths(1) // Cookie will expire in one month
+            };
+            Response.Cookies.Add(languageCookie);
 
             return RedirectToAction("Index");
         }

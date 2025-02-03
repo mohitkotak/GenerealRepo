@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="@(System.Threading.Thread.CurrentThread.CurrentCulture.Name)">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +7,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @{
-        var currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
-        var languages = new List<SelectListItem>
-         {
-         new SelectListItem { Text = "English", Value = "en" },
-         new SelectListItem { Text = "Français", Value = "fr" },
-         new SelectListItem { Text = "Español", Value = "es" }
-     };
+        var currentLang = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+    }
     }
 </head>
 <body>
@@ -31,12 +26,13 @@
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>               
-                <select id="languageSwitcher" onchange="changeLanguage()">
-                    @foreach (var language in languages)
-                    {
-                        <option value="@language.Value" @(currentCulture.StartsWith(language.Value) ? "selected" : "")>@language.Text</option>
-                    }
-                </select>
+                <form id="languageForm" action="@Url.Action("ChangeLanguage", "Home")" method="post">
+                    <select name="lang" onchange="document.getElementById('languageForm').submit();">
+                        <option value="en" @(currentLang == "en" ? "selected" : "")>English</option>
+                        <option value="fr" @(currentLang == "fr" ? "selected" : "")>Français</option>
+                        <option value="es" @(currentLang == "es" ? "selected" : "")>Español</option>
+                    </select>
+                </form>
             </div>
         </div>
     </nav>

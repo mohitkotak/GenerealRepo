@@ -12,30 +12,26 @@ namespace GeneralWorkMVC
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            HttpContext context = HttpContext.Current;
-            string lang = null;
-            if (context != null && context.Session != null)
-            {
-                // Check if the language is set in session (can also check for cookies here)
-                if (Session["Culture"] != null)
-                {
-                    lang = Session["Culture"].ToString();
-                }
-            }
-            else
-            {
-                // Set default language (e.g., English) if not set
-                lang = "en";
-            }
-
-            // Set the culture and UI culture based on the session or default
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang);
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            // Check if the language cookie exists
+            var langCookie = Request.Cookies["Language"];
+            string lang = "en"; // Default language is English
+
+            if (langCookie != null && !string.IsNullOrEmpty(langCookie.Value))
+            {
+                lang = langCookie.Value;
+            }
+
+            // Set the culture and UI culture for the current thread
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang);
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
         }
     }
 }
