@@ -1,0 +1,46 @@
+﻿@model GeneralWorkMVC.Models.PdfModel
+
+@{
+    ViewBag.Title = "Upload PDF File";
+}
+
+<h2>Upload PDF and Read Content</h2>
+
+@using (Html.BeginForm("Index", "Pdf", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <label for="PdfFile">Select PDF File:</label>
+        <input type="file" name="PdfFile" id="PdfFile" />
+    </div>
+    <div>
+        <button type="submit">Upload and Read PDF</button>
+    </div>
+}
+
+<div id="pdfContent">
+    @if (Model != null && !string.IsNullOrEmpty(Model.PdfContent))
+    {
+        <pre>@Model.PdfContent</pre>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("form").submit(function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            $.ajax({
+                url: '@Url.Action("UploadPdf", "Pdf")',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Update the PDF content displayed on the page
+                    $('#pdfContent').html(response);
+                },
+                processData: false,
+                contentType: false
+            });
+        });
+    });
+</script>
