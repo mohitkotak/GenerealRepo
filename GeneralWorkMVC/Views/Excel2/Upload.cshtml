@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Upload Excel";
+}
+
+<h2>Upload Excel File</h2>
+
+@using (Html.BeginForm("Upload", "Excel2", FormMethod.Post, new { enctype = "multipart/form-data", id = "uploadForm" }))
+{
+    <input type="file" id="fileUpload" name="file" />
+    <button type="submit">Upload File</button>
+}
+
+<div id="sheet1Data"></div>
+<div id="sheet2Data"></div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Handle form submission with jQuery and AJAX
+            $("#uploadForm").submit(function (e) {
+                e.preventDefault();  // Prevent default form submission
+
+                var formData = new FormData();
+                var fileInput = $("#fileUpload")[0];
+
+                if (fileInput.files.length > 0) {
+                    formData.append("file", fileInput.files[0]);
+
+                    // AJAX request to upload the file
+                    $.ajax({
+                        url: '@Url.Action("Upload", "Excel2")',  // Action to handle file upload
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response && response.Sheet1Data && response.Sheet2Data) {
+                                // Process Sheet1 data and generate HTML
+                                var sheet1Html = '<h3>Sheet1 Data</h3><table border="1"><thead><tr><th>Id</th><th>Name</th><th>Amount</th></tr></thead><tbody>';
+                                $.each(response.Sheet1Data, function (index, item) {
+                                    sheet1Html += '<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.Amount + '</td></tr>';
+                                });
+                                sheet1Html += '</tbody></table>';
+                                $("#sheet1Data").html(sheet1Html);
+
+                                // Process Sheet2 data and generate HTML
+                                var sheet2Html = '<h3>Sheet2 Data</h3><table border="1"><thead><tr><th>Code</th><th>Description</th><th>Price</th></tr></thead><tbody>';
+                                $.each(response.Sheet2Data, function (index, item) {
+                                    sheet2Html += '<tr><td>' + item.Code + '</td><td>' + item.Description + '</td><td>' + item.Price + '</td></tr>';
+                                });
+                                sheet2Html += '</tbody></table>';
+                                $("#sheet2Data").html(sheet2Html);
+                            } else {
+                                alert("Error: " + response.message);
+                            }
+                        },
+                        error: function () {
+                            alert("An error occurred while processing the file.");
+                        }
+                    });
+                } else {
+                    alert("Please select a file to upload.");
+                }
+            });
+        });
+    </script>
+}
