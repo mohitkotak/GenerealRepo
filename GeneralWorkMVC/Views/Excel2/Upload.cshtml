@@ -36,17 +36,17 @@
                         success: function (response) {
                             if (response && response.Sheet1Data && response.Sheet2Data) {
                                 // Process Sheet1 data and generate HTML
-                                var sheet1Html = '<h3>Sheet1 Data</h3><table border="1"><thead><tr><th>Id</th><th>Name</th><th>Amount</th></tr></thead><tbody>';
+                                var sheet1Html = '<h3>Sheet1 Data</h3><table border="1"><thead><tr><th>Id</th><th>Name</th><th>Amount</th><th>Image</th></tr></thead><tbody>';
                                 $.each(response.Sheet1Data, function (index, item) {
-                                    sheet1Html += '<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.Amount + '</td></tr>';
+                                    sheet1Html += '<tr><td>' + item.Id + '</td><td>' + item.Name + '</td><td>' + item.Amount + '</td><td><img src="data:image/jpeg;base64,' + item.Image + '" alt="Image" /></td></tr>';
                                 });
                                 sheet1Html += '</tbody></table>';
                                 $("#sheet1Data").html(sheet1Html);
 
                                 // Process Sheet2 data and generate HTML
-                                var sheet2Html = '<h3>Sheet2 Data</h3><table border="1"><thead><tr><th>Code</th><th>Description</th><th>Price</th></tr></thead><tbody>';
+                                var sheet2Html = '<h3>Sheet2 Data</h3><table border="1"><thead><tr><th>Code</th><th>Description</th><th>Price</th><th>Image</th></tr></thead><tbody>';
                                 $.each(response.Sheet2Data, function (index, item) {
-                                    sheet2Html += '<tr><td>' + item.Code + '</td><td>' + item.Description + '</td><td>' + item.Price + '</td></tr>';
+                                    sheet2Html += '<tr><td>' + item.Code + '</td><td>' + item.Description + '</td><td>' + item.Price + '</td><td><img src="data:image/jpeg;base64,' + item.Picture + '" alt="Image" /></td> </tr>';
                                 });
                                 sheet2Html += '</tbody></table>';
                                 $("#sheet2Data").html(sheet2Html);
